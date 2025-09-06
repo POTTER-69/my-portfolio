@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wadah Muhammed - Flutter Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f9f9f9;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Header Styles */
+    header {
+      background: linear-gradient(135deg, #6d9dc5 0%, #4a7b9d 100%);
+      color: white;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 2rem;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: white;
+      transition: color 0.3s ease;
+      font-weight: 500;
+    }
+
+    .nav-links a:hover {
+      color: #1d2d50;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      padding: 5px;
+    }
+
+    .mobile-menu-btn span {
+      width: 25px;
+      height: 3px;
+      background: white;
+      margin: 3px 0;
+      transition: 0.3s;
+      border-radius: 2px;
+    }
+
+    .mobile-nav {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: #4a7b9d;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .mobile-nav.active {
+      display: block;
+    }
+
+    .mobile-nav ul {
+      list-style: none;
+      padding: 1rem 0;
+    }
+
+    .mobile-nav ul li {
+      text-align: center;
+      padding: 0.8rem 0;
+    }
+
+    .mobile-nav ul li a {
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+      font-size: 1.1rem;
+    }
+
+    main {
+      margin-top: 80px;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(rgba(29, 45, 80, 0.8), rgba(13, 27, 42, 0.8)), url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 100px 0;
+      text-align: center;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .profile-img {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      border: 5px solid rgba(255, 255, 255, 0.3);
+      margin: 0 auto 1.5rem;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .profile-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero .subtitle {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      color: #6d9dc5;
+    }
+
+    .cta-button {
+      background: #6d9dc5;
+      color: white;
+      padding: 12px 30px;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      display: inline-block;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .cta-button:hover {
+      background: #5c6bc0;
+      transform: translateY(-3px);
+    }
+
+    /* Section Styles */
+    .section {
+      padding: 80px 0;
+    }
+
+    .section-light {
+      background: white;
+    }
+
+    .section-dark {
+      background: #f5f7fa;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+      color: #1d2d50;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      width: 80px;
+      height: 4px;
+      background: #6d9dc5;
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 2px;
+    }
+
+    /* About Section */
+    .about-content {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+
+    /* Education Section */
+    .education-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .education-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .education-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .education-card h3 {
+      color: #1d2d50;
+      margin-bottom: 0.5rem;
+    }
+
+    .education-card .date {
+      color: #6d9dc5;
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+
+    /* Skills Section */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .skill-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .skill-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .skill-icon {
+      font-size: 2.5rem;
+      color: #6d9dc5;
+      margin-bottom: 1rem;
+    }
+
+    /* Projects Section */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2.5rem;
+      margin-top: 3rem;
+    }
+
+    .project-card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+
+    .project-img {
+      width: 100%;
+      height: 220px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #6d9dc5 0%, #4a7b9d 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 3rem;
+    }
+
+    .project-content {
+      padding: 1.8rem;
+    }
+
+    .project-title {
+      color: #1d2d50;
+      margin-bottom: 0.8rem;
+      font-size: 1.4rem;
+    }
+
+    .project-description {
+      color: #555;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .tech-tag {
+      background: #e8f0fe;
+      color: #1d2d50;
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .project-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #6d9dc5;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .project-link:hover {
+      color: #1d2d50;
+    }
+
+    /* Services Section */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .service-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      text-align: center;
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .service-icon {
+      font-size: 2.5rem;
+      color: #6d9dc5;
+      margin-bottom: 1rem;
+    }
+
+    /* Contact Section */
+    .contact-info {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .contact-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .contact-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .contact-icon {
+      font-size: 2rem;
+      color: #6d9dc5;
+      margin-bottom: 1rem;
+    }
+
+    .contact-details a {
+      color: #1d2d50;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-details a:hover {
+      color: #6d9dc5;
+    }
+
+    /* Footer */
+    footer {
+      background: #1d2d50;
+      color: white;
+      text-align: center;
+      padding: 2rem 0;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .social-links a {
+      color: white;
+      font-size: 1.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .social-links a:hover {
+      color: #6d9dc5;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .mobile-menu-btn {
+        display: flex;
+      }
+
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+
+      .hero .subtitle {
+        font-size: 1.2rem;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+
+      .profile-img {
+        width: 150px;
+        height: 150px;
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <div class="logo">Wadah</div>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="mobile-menu-btn" id="mobileMenuBtn">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </nav>
+    <div class="mobile-nav" id="mobileNav">
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <div class="profile-img">
+            <img src="c:\Users\Potter\Desktop\web 2\profile.jpg" alt="Wadah Muhammed">
+          </div>
+          <h1>Wadah Muhammed</h1>
+          <p class="subtitle">Flutter Developer & Computer Science Student</p>
+          <a href="#contact" class="cta-button">Hire Me For Your Project</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section section-light">
+      <div class="container">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-content">
+          <p>I am Wadah Muhammed AboHaba, a passionate Flutter Developer with strong expertise in Dart, Firebase, and modern mobile app development. My journey in programming started during my university studies, and I've been dedicated to creating exceptional mobile experiences ever since.</p>
+          <br>
+          <p>I focus on building high-quality applications in the fastest possible time without compromising performance or scalability. With solid knowledge in OOP, Data Structures, and practical experience with tools like Git, VS Code, and Firebase services, I bring both technical expertise and creative problem-solving to every project.</p>
+          <br>
+          <p>When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, or sharing my knowledge with the developer community. I believe in clean code, user-centric design, and continuous learning.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="education" class="section section-dark">
+      <div class="container">
+        <h2 class="section-title">Education</h2>
+        <div class="education-grid">
+          <div class="education-card">
+            <h3>Bachelor of Computer Science</h3>
+            <p class="date">2023 - 2027(Expected)</p>
+            <p>Misr Higher Institute For Commerce & Computers</p>
+            <p>Specialized in Computer Science</p>
+          </div>
+          <div class="education-card">
+            <h3>Digital Egypt Pioneers Initiative – Flutter Track</h3>
+            <p class="date">2025</p>
+            <p>specialized training track that provided hands-on experience in Flutter development, covering Dart fundamentals, OOP, state management, Firebase integration, and building cross-platform mobile apps with real-world projects.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="section section-light">
+      <div class="container">
+        <h2 class="section-title">My Skills</h2>
+        <div class="skills-grid">
+          <div class="skill-card">
+            <div class="skill-icon"><i class="fas fa-mobile-alt"></i></div>
+            <h3>Flutter Development</h3>
+            <p>Expert in building cross-platform mobile applications with Flutter framework and Dart programming language.</p>
+          </div>
+          <div class="skill-card">
+            <div class="skill-icon"><i class="fas fa-paint-brush"></i></div>
+            <h3>UI/UX Design</h3>
+            <p>Creating intuitive and beautiful user interfaces that provide exceptional user experiences.</p>
+          </div>
+          <div class="skill-card">
+            <div class="skill-icon"><i class="fas fa-fire"></i></div>
+            <h3>Firebase Integration</h3>
+            <p>Experience with Firebase services including Authentication, Firestore, and Cloud Functions.</p>
+          </div>
+          <div class="skill-card">
+            <div class="skill-icon"><i class="fas fa-code-branch"></i></div>
+            <h3>Version Control</h3>
+            <p>Proficient with Git and GitHub for code versioning and collaborative development.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="section section-dark">
+      <div class="container">
+        <h2 class="section-title">My Projects</h2>
+        <div class="projects-grid">
+          <div class="project-card">
+            <div class="project-img">
+              <i class="fas fa-sign-in-alt"></i>
+            </div>
+            <div class="project-content">
+              <h3 class="project-title">Simple Login-Screen With Validation</h3>
+              <p class="project-description">A clean and responsive login screen with comprehensive form validation. Includes email format checking, password requirements, and error message display.</p>
+              <div class="project-tech">
+                <span class="tech-tag">Flutter</span>
+                <span class="tech-tag">Dart</span>
+                <span class="tech-tag">Form Validation</span>
+                <span class="tech-tag">UI Design</span>
+              </div>
+              <div class="project-links">
+                <a href="#" class="project-link"><i class="fab fa-github"></i> Code</a>
+                <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-img">
+              <i class="fas fa-calculator"></i>
+            </div>
+            <div class="project-content">
+              <h3 class="project-title">Simple Counter</h3>
+              <p class="project-description">A basic counter application that demonstrates state management in Flutter. Features increment, decrement, and reset functionality with a clean user interface.</p>
+              <div class="project-tech">
+                <span class="tech-tag">Flutter</span>
+                <span class="tech-tag">State Management</span>
+                <span class="tech-tag">Dart</span>
+                <span class="tech-tag">Beginner Project</span>
+              </div>
+              <div class="project-links">
+                <a href="#" class="project-link"><i class="fab fa-github"></i> Code</a>
+                <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-img">
+              <i class="fas fa-shopping-cart"></i>
+            </div>
+            <div class="project-content">
+              <h3 class="project-title">Simple Shopping App</h3>
+              <p class="project-description">A basic shopping application with product listing, cart functionality, and checkout process. Demonstrates CRUD operations and state management.</p>
+              <div class="project-tech">
+                <span class="tech-tag">Flutter</span>
+                <span class="tech-tag">State Management</span>
+                <span class="tech-tag">CRUD Operations</span>
+                <span class="tech-tag">UI Design</span>
+              </div>
+              <div class="project-links">
+                <a href="#" class="project-link"><i class="fab fa-github"></i> Code</a>
+                <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="section section-light">
+      <div class="container">
+        <h2 class="section-title">Services I Offer</h2>
+        <div class="services-grid">
+          <div class="service-card">
+            <div class="service-icon"><i class="fas fa-mobile"></i></div>
+            <h3>Mobile App Development</h3>
+            <p>Custom Flutter applications for iOS and Android with responsive design and smooth performance.</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon"><i class="fas fa-sync-alt"></i></div>
+            <h3>App Maintenance & Updates</h3>
+            <p>Keeping your application up-to-date with the latest OS changes and feature additions.</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon"><i class="fas fa-database"></i></div>
+            <h3>Backend Integration</h3>
+            <p>Firebase and custom backend solutions with API development and database management.</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon"><i class="fas fa-paint-brush"></i></div>
+            <h3>UI/UX Design</h3>
+            <p>Creating visually appealing and user-friendly interfaces that enhance user engagement.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section section-dark">
+      <div class="container">
+        <h2 class="section-title">Get In Touch</h2>
+        <p class="about-content" style="text-align: center; margin-bottom: 2rem;">
+          Interested in working together? Have a project in mind? Let's connect and discuss how I can help bring your ideas to life.
+        </p>
+        <div class="contact-info">
+          <div class="contact-card">
+            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+            <h3>Email</h3>
+            <div class="contact-details">
+              <a href="mailto:iqwadah4every@gmail.com">iqwadah4every@gmail.com</a>
+            </div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon"><i class="fas fa-phone"></i></div>
+            <h3>Phone</h3>
+            <div class="contact-details">
+              <a href="tel:+2001114026681">+20 01114026681</a>
+            </div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon"><i class="fab fa-linkedin"></i></div>
+            <h3>LinkedIn</h3>
+            <div class="contact-details">
+              <a href="https://www.linkedin.com/in/wadahmuhammed" target="_blank">Connect with me</a>
+            </div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon"><i class="fab fa-github"></i></div>
+            <h3>GitHub</h3>
+            <div class="contact-details">
+              <a href="https://github.com/POTTER-69" target="_blank">View my projects</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Wadah Muhammed. All rights reserved.</p>
+      <div class="social-links">
+        <a href="mailto:iqwadah4every@gmail.com"><i class="fas fa-envelope"></i></a>
+        <a href="https://www.linkedin.com/in/wadahmuhammed" target="_blank"><i class="fab fa-linkedin"></i></a>
+        <a href="tel:+2001114026681"><i class="fas fa-phone"></i></a>
+        <a href="https://github.com/POTTER-69" target="_blank"><i class="fab fa-github"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu functionality
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileNav.classList.toggle('active');
+    });
+
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('.mobile-nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileNav.classList.remove('active');
+      });
+    });
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>
